@@ -1,4 +1,4 @@
-#the USER class
+# The USER class
 class User:
     """
     Represents a system user with authentication, profile management, and communication features.
@@ -13,6 +13,52 @@ class User:
         self.__password = password  # Storing plain text passwords is not secure
         self.__user_role = user_role
 
+    # Getter and Setter for user_id
+    def get_user_id(self) -> int:
+        """Returns the user ID."""
+        return self.__user_id
+
+    def set_user_id(self, user_id: int) -> None:
+        """Sets a new user ID."""
+        self.__user_id = user_id
+
+    # Getter and Setter for name
+    def get_name(self) -> str:
+        """Returns the user's name."""
+        return self.__name
+
+    def set_name(self, name: str) -> None:
+        """Updates the user's name."""
+        self.__name = name
+
+    # Getter and Setter for contact_info
+    def get_contact_info(self) -> str:
+        """Returns the user's contact information."""
+        return self.__contact_info
+
+    def set_contact_info(self, contact_info: str) -> None:
+        """Updates the user's contact information."""
+        self.__contact_info = contact_info
+
+    # Getter and Setter for username
+    def get_username(self) -> str:
+        """Returns the user's username."""
+        return self.__username
+
+    def set_username(self, username: str) -> None:
+        """Updates the user's username."""
+        self.__username = username
+
+    # Getter and Setter for user_role
+    def get_user_role(self) -> str:
+        """Returns the user's role."""
+        return self.__user_role
+
+    def set_user_role(self, user_role: str) -> None:
+        """Updates the user's role."""
+        self.__user_role = user_role
+
+    # Authentication methods
     def login(self, username: str, password: str) -> bool:
         """
         Authenticates the user based on username and password.
@@ -76,7 +122,7 @@ class User:
         Sends a message to another user.
         Consider implementing a message queue for better handling.
         """
-        print(f"Message sent to {receiver.__username}: {message}")
+        print(f"Message sent to {receiver.get_username()}: {message}")
 
     def change_contact_info(self, new_contact: str) -> bool:
         """
@@ -111,6 +157,28 @@ class User:
         """
         return f"Support request submitted: {issue}"
 
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the User object.
+        The password is not included for security reasons.
+        """
+        return f"User(ID: {self.__user_id}, Name: {self.__name}, Username: {self.__username}, Role: {self.__user_role})"
+
+
+# Example Usage
+user1 = User(1, "Alice", "alice@email.com", "alice123", "pass123", "Customer")
+
+# Testing Getter Methods
+print(user1.get_name())  # Output: Alice
+print(user1.get_account_details())
+
+# Testing Setter Methods
+user1.set_name("Alicia")
+user1.set_contact_info("newemail@email.com")
+
+# Testing str method
+print(user1)  # Output: User(ID: 1, Name: Alicia, Username: alice123, Role: Customer)
+
 
 # Employee class
 class Employee:
@@ -129,46 +197,80 @@ class Employee:
         self.__username = username
         self.__password = password  # Password should be stored securely (hashed)
 
-    def handle_service_request(self, request_id: int) -> None:
-        """
-        Processes a service request.
-        Ideally, this should update the request status in a database.
-        """
-        print(f"Handling service request {request_id}.")
+    # Getter and Setter for employee_id
+    def get_employee_id(self) -> int:
+        """Returns the employee ID."""
+        return self.__employee_id
 
+    def set_employee_id(self, employee_id: int) -> None:
+        """Sets a new employee ID."""
+        self.__employee_id = employee_id
+
+    # Getter and Setter for name
+    def get_name(self) -> str:
+        """Returns the employee's name."""
+        return self.__name
+
+    def set_name(self, name: str) -> None:
+        """Updates the employee's name."""
+        self.__name = name
+
+    # Getter and Setter for role
+    def get_role(self) -> str:
+        """Returns the employee's role."""
+        return self.__role
+
+    def set_role(self, role: str) -> None:
+        """Updates the employee's role."""
+        self.__role = role
+
+    # Getter and Setter for assigned requests
     def get_assigned_requests(self) -> list:
-        """
-        Returns a list of assigned service requests.
-        Should be dynamically retrieved from a database.
-        """
+        """Returns a list of assigned service requests."""
         return self.__assigned_requests
 
+    def assign_request(self, request_id: int) -> None:
+        """Assigns a service request to the employee."""
+        self.__assigned_requests.append(request_id)
+        print(f"Request {request_id} assigned to {self.__name}.")
+
+    # Getter and Setter for admin_id
+    def get_admin_id(self) -> int:
+        """Returns the ID of the supervising admin."""
+        return self.__admin_id
+
+    def set_admin_id(self, admin_id: int) -> None:
+        """Sets a new admin ID."""
+        self.__admin_id = admin_id
+
+    # Getter and Setter for username
+    def get_username(self) -> str:
+        """Returns the employee's username."""
+        return self.__username
+
+    def set_username(self, username: str) -> None:
+        """Updates the employee's username."""
+        self.__username = username
+
+    # Employee actions
+    def handle_service_request(self, request_id: int) -> None:
+        """Processes a service request."""
+        print(f"Handling service request {request_id}.")
+
     def update_request_status(self, request_id: int, status: str) -> None:
-        """
-        Updates the status of a service request.
-        Ideally, this should interact with a service request tracking system.
-        """
+        """Updates the status of a service request."""
         print(f"Service request {request_id} status updated to {status}.")
 
     def view_schedule(self) -> dict:
-        """
-        Retrieves the employee's schedule.
-        Should be dynamically loaded instead of a static dictionary.
-        """
+        """Retrieves the employee's schedule."""
         return {"Monday": "Shift 9 AM - 5 PM", "Tuesday": "Off-duty"}
 
     def submit_work_report(self) -> None:
-        """
-        Submits a work report.
-        Consider implementing a logging system to track reports.
-        """
+        """Submits a work report."""
         print("Work report submitted.")
 
     def request_leave(self, days: int) -> bool:
-        """
-        Allows an employee to request leave.
-        The approval limit is currently set to 14 days.
-        """
+        """Allows an employee to request leave."""
         if days <= 14:
             print("Leave request approved.")
             return True
@@ -176,32 +278,45 @@ class Employee:
         return False
 
     def receive_notification(self, message: str) -> None:
-        """
-        Receives a notification.
-        Consider integrating with an actual notification system.
-        """
+        """Receives a notification."""
         print(f"Notification received: {message}")
 
     def log_hours_worked(self, hours: int) -> None:
-        """
-        Logs the number of hours worked by the employee.
-        Should store this data in a database for payroll calculations.
-        """
+        """Logs the number of hours worked by the employee."""
         print(f"Logged {hours} hours worked.")
 
     def transfer_request_to_another_employee(self, employee: "Employee", request_id: int) -> None:
-        """
-        Transfers a service request to another employee.
-        This should update the request ownership in the system.
-        """
-        print(f"Transferred request {request_id} to {employee.__name}")
+        """Transfers a service request to another employee."""
+        print(f"Transferred request {request_id} to {employee.get_name()}")
 
     def view_employee_performance(self) -> dict:
-        """
-        Retrieves performance metrics of the employee.
-        Performance tracking should be based on real data.
-        """
+        """Retrieves performance metrics of the employee."""
         return {"Performance": "Excellent", "Tasks Completed": 50}
+
+    def __str__(self) -> str:
+        """Returns a string representation of the Employee object."""
+        return f"Employee(ID: {self.__employee_id}, Name: {self.__name}, Role: {self.__role}, Username: {self.__username})"
+
+
+# Example Usage
+employee1 = Employee(101, "John Doe", "Technician", 5001, "johndoe", "securepass")
+
+# Testing Getter Methods
+print(employee1.get_name())  # Output: John Doe
+print(employee1.get_employee_id())  # Output: 101
+print(employee1.get_role())  # Output: Technician
+print(employee1.get_assigned_requests())  # Output: []
+
+# Testing Setter Methods
+employee1.set_name("Johnny Doe")
+employee1.set_role("Senior Technician")
+
+# Assign a request
+employee1.assign_request(2001)
+
+# Testing str method
+print(employee1)  # Output: Employee(ID: 101, Name: Johnny Doe, Role: Senior Technician, Username: johndoe)
+
 
 #Room Class
 class Room:
@@ -226,76 +341,64 @@ class Room:
         self.__price_per_night = price_per_night
         self.__availability_status = availability_status  # True if the room is available, False otherwise.
 
-    def check_availability(self) -> bool:
-        """
-        Returns the availability status of the room.
-        
-        Returns:
-        - bool: True if the room is available, False otherwise.
-        """
-        return self.__availability_status
+    # Getter and Setter for room_number
+    def get_room_number(self) -> int:
+        """Returns the room number."""
+        return self.__room_number
 
-    def update_status(self, new_status: bool) -> None:
-        """
-        Updates the availability status of the room.
-        
-        Parameters:
-        - new_status (bool): The new availability status (True for available, False for occupied).
-        """
-        self.__availability_status = new_status
+    def set_room_number(self, room_number: int) -> None:
+        """Sets a new room number."""
+        self.__room_number = room_number
 
-    def get_price(self) -> float:
-        """
-        Returns the price per night for the room.
-        
-        Returns:
-        - float: The price per night.
-        """
-        return self.__price_per_night
+    # Getter and Setter for room_type
+    def get_room_type(self) -> str:
+        """Returns the room type."""
+        return self.__room_type
+
+    def set_room_type(self, room_type: str) -> None:
+        """Updates the room type."""
+        self.__room_type = room_type
+
+    # Getter and Setter for amenities
+    def get_amenities(self) -> list:
+        """Returns the list of amenities available in the room."""
+        return self.__amenities
 
     def add_amenity(self, amenity: str) -> None:
-        """
-        Adds a new amenity to the room if it's not already present.
-        
-        Parameters:
-        - amenity (str): The name of the amenity to be added.
-        """
+        """Adds a new amenity to the room if it's not already present."""
         if amenity not in self.__amenities:
             self.__amenities.append(amenity)
 
     def remove_amenity(self, amenity: str) -> None:
-        """
-        Removes an existing amenity from the room.
-        
-        Parameters:
-        - amenity (str): The name of the amenity to be removed.
-        """
+        """Removes an existing amenity from the room."""
         if amenity in self.__amenities:
             self.__amenities.remove(amenity)
 
-    def get_room_info(self) -> dict:
-        """
-        Returns a dictionary containing all the room details.
-        
-        Returns:
-        - dict: Room details including room number, type, amenities, price, and availability.
-        """
-        return {
-            "room_number": self.__room_number,
-            "room_type": self.__room_type,
-            "amenities": self.__amenities,
-            "price_per_night": self.__price_per_night,
-            "availability_status": self.__availability_status
-        }
+    # Getter and Setter for price_per_night
+    def get_price(self) -> float:
+        """Returns the price per night for the room."""
+        return self.__price_per_night
 
     def update_price(self, new_price: float) -> None:
-        """
-        Updates the price per night of the room.
-        
-        Parameters:
-        - new_price (float): The new price for the room.
-        """
+        """Updates the price per night of the room."""
         self.__price_per_night = new_price
+
+    # Getter and Setter for availability_status
+    def check_availability(self) -> bool:
+        """Returns the availability status of the room."""
+        return self.__availability_status
+
+    def update_status(self, new_status: bool) -> None:
+        """Updates the availability status of the room."""
+        self.__availability_status = new_status
+
+    def release_room(self) -> None:
+        """Marks the room as available when a guest checks out."""
+        self.__availability_status = True
+
+    def schedule_maintenance(self, date: str) -> None:
+        """Marks the room as unavailable due to scheduled maintenance."""
+        self.__availability_status = False
 
     def calculate_discounted_price(self, discount: float) -> float:
         """
@@ -309,22 +412,43 @@ class Room:
         """
         return self.__price_per_night * (1 - discount / 100)
 
-    def release_room(self) -> None:
-        """
-        Marks the room as available when a guest checks out.
-        """
-        self.__availability_status = True
+    def get_room_info(self) -> dict:
+        """Returns a dictionary containing all the room details."""
+        return {
+            "room_number": self.__room_number,
+            "room_type": self.__room_type,
+            "amenities": self.__amenities,
+            "price_per_night": self.__price_per_night,
+            "availability_status": self.__availability_status
+        }
 
-    def schedule_maintenance(self, date: str) -> None:
+    def __str__(self) -> str:
         """
-        Marks the room as unavailable due to scheduled maintenance.
-        
-        Parameters:
-        - date (str): The scheduled maintenance date (currently not stored).
-        
-        Note: Ideally, the date should be recorded in a maintenance log.
+        Returns a string representation of the Room object.
         """
-        self.__availability_status = False
+        availability = "Available" if self.__availability_status else "Occupied"
+        return f"Room {self.__room_number}: {self.__room_type}, Price: ${self.__price_per_night}/night, Status: {availability}"
+
+
+# Example Usage
+room1 = Room(101, "Suite", ["Wi-Fi", "TV", "Mini-Bar"], 150.0)
+
+# Testing Getter Methods
+print(room1.get_room_number())  # Output: 101
+print(room1.get_room_type())  # Output: Suite
+print(room1.get_amenities())  # Output: ['Wi-Fi', 'TV', 'Mini-Bar']
+print(room1.get_price())  # Output: 150.0
+print(room1.check_availability())  # Output: True
+
+# Testing Setter Methods
+room1.set_room_number(202)
+room1.set_room_type("Deluxe Suite")
+room1.add_amenity("Jacuzzi")
+room1.update_price(200.0)
+room1.update_status(False)  # Mark room as occupied
+
+# Printing Updated Room Info
+print(room1)  # Output: Room 202: Deluxe Suite, Price: $200.0/night, Status: Occupied
 
  
  # guest class
@@ -350,32 +474,61 @@ class Guest:
         self.__loyalty_points = 0  # Start with 0 points
         self.__reservation_history = []  # List of booking IDs
 
+    # Getter and Setter for guest_id
+    def get_guest_id(self) -> int:
+        """Returns the guest ID."""
+        return self.__guest_id
+
+    def set_guest_id(self, guest_id: int) -> None:
+        """Sets a new guest ID."""
+        self.__guest_id = guest_id
+
+    # Getter and Setter for name
+    def get_name(self) -> str:
+        """Returns the guest's name."""
+        return self.__name
+
+    def set_name(self, name: str) -> None:
+        """Updates the guest's name."""
+        self.__name = name
+
+    # Getter and Setter for contact_info
+    def get_contact_info(self) -> str:
+        """Returns the guest's contact information."""
+        return self.__contact_info
+
+    def set_contact_info(self, contact_info: str) -> None:
+        """Updates the guest's contact information."""
+        self.__contact_info = contact_info
+
+    # Getter and Setter for loyalty_status
+    def get_loyalty_status(self) -> bool:
+        """Returns the guest's loyalty program enrollment status."""
+        return self.__loyalty_status
+
+    def set_loyalty_status(self, status: bool) -> None:
+        """Updates the guest's loyalty program enrollment status."""
+        self.__loyalty_status = status
+
+    # Getter for reservation history
+    def get_reservation_history(self) -> list:
+        """Returns the guest's reservation history."""
+        return self.__reservation_history
+
     def create_account(self, name: str, contact_info: str) -> None:
-        """
-        Creates a guest account.
-        """
+        """Creates a guest account."""
         self.__name = name
         self.__contact_info = contact_info
         print("Account created successfully.")
 
     def update_profile(self, new_name: str, new_contact: str) -> None:
-        """
-        Updates guest profile details.
-        """
+        """Updates guest profile details."""
         self.__name = new_name
         self.__contact_info = new_contact
         print("Profile updated successfully.")
 
-    def view_reservation_history(self) -> list:
-        """
-        Returns the guest's reservation history.
-        """
-        return self.__reservation_history
-
     def join_loyalty_program(self) -> None:
-        """
-        Enrolls the guest in the loyalty program.
-        """
+        """Enrolls the guest in the loyalty program."""
         if not self.__loyalty_status:
             self.__loyalty_status = True
             self.__loyalty_points = 50  # Give initial bonus points
@@ -384,15 +537,11 @@ class Guest:
             print("Already enrolled in the loyalty program.")
 
     def request_service(self, service: str) -> str:
-        """
-        Requests an additional service for the stay.
-        """
+        """Requests an additional service for the stay."""
         return f"Service request '{service}' has been placed."
 
     def cancel_booking(self, booking_id: int) -> None:
-        """
-        Cancels a booking and removes it from the reservation history.
-        """
+        """Cancels a booking and removes it from the reservation history."""
         if booking_id in self.__reservation_history:
             self.__reservation_history.remove(booking_id)
             print(f"Booking {booking_id} has been canceled.")
@@ -400,15 +549,11 @@ class Guest:
             print(f"Booking {booking_id} not found.")
 
     def give_feedback(self, rating: int, comments: str) -> str:
-        """
-        Allows the guest to give feedback on their stay.
-        """
+        """Allows the guest to give feedback on their stay."""
         return f"Feedback submitted with rating {rating}: {comments}"
 
     def view_loyalty_points(self) -> int:
-        """
-        Returns the number of loyalty points the guest has.
-        """
+        """Returns the number of loyalty points the guest has."""
         return self.__loyalty_points
 
     def earn_loyalty_points(self, amount_spent: float) -> None:
@@ -422,9 +567,7 @@ class Guest:
         print(f"You earned {points_earned} loyalty points! Total: {self.__loyalty_points} points.")
 
     def redeem_loyalty_points(self, points: int) -> bool:
-        """
-        Redeems loyalty points if the guest has enough.
-        """
+        """Redeems loyalty points if the guest has enough."""
         if points > self.__loyalty_points:
             print("Not enough loyalty points.")
             return False
@@ -433,18 +576,40 @@ class Guest:
         return True
 
     def add_reservation(self, booking_id: int) -> None:
-        """
-        Adds a booking ID to the guest's reservation history.
-        """
+        """Adds a booking ID to the guest's reservation history."""
         self.__reservation_history.append(booking_id)
 
     def view_invoice(self, booking_id: int) -> str:
-        """
-        Displays invoice details for a given booking.
-        """
+        """Displays invoice details for a given booking."""
         if booking_id in self.__reservation_history:
             return f"Invoice for booking {booking_id} is available."
         return f"No invoice found for booking {booking_id}."
+
+    def __str__(self) -> str:
+        """Returns a string representation of the Guest object."""
+        loyalty = "Enrolled" if self.__loyalty_status else "Not Enrolled"
+        return f"Guest(ID: {self.__guest_id}, Name: {self.__name}, Contact: {self.__contact_info}, Loyalty: {loyalty})"
+
+
+# Example Usage
+guest1 = Guest(301, "Alice Smith", "alice@email.com")
+
+# Testing Getter Methods
+print(guest1.get_name())  # Output: Alice Smith
+print(guest1.get_guest_id())  # Output: 301
+print(guest1.get_loyalty_status())  # Output: False
+print(guest1.get_reservation_history())  # Output: []
+
+# Testing Setter Methods
+guest1.set_name("Alice Johnson")
+guest1.set_contact_info("newalice@email.com")
+guest1.join_loyalty_program()
+
+# Adding a reservation
+guest1.add_reservation(5001)
+
+# Printing Updated Guest Info
+print(guest1)  # Output: Guest(ID: 301, Name: Alice Johnson, Contact: newalice@email.com, Loyalty: Enrolled)
 
 #Booking Class
 class Booking:
@@ -471,17 +636,41 @@ class Booking:
         self.__status = status
         self.__special_requests = []
 
+    # Getter and Setter for booking_id
+    def get_booking_id(self) -> int:
+        """Returns the booking ID."""
+        return self.__booking_id
+
+    def set_booking_id(self, booking_id: int) -> None:
+        """Updates the booking ID."""
+        self.__booking_id = booking_id
+
+    # Getter and Setter for status
+    def get_status(self) -> str:
+        """Returns the current booking status."""
+        return self.__status
+
+    def set_status(self, status: str) -> None:
+        """Updates the booking status."""
+        self.__status = status
+
+    # Getter and Setter for special_requests
+    def get_special_requests(self) -> list:
+        """Returns the list of special requests made for the booking."""
+        return self.__special_requests
+
+    def add_special_request(self, request: str) -> None:
+        """Adds a special request for the booking."""
+        self.__special_requests.append(request)
+        print(f"Special request added: {request}")
+
     def confirm_booking(self) -> None:
-        """
-        Confirms the booking by updating its status.
-        """
+        """Confirms the booking by updating its status."""
         self.__status = "Confirmed"
         print(f"Booking {self.__booking_id} confirmed.")
 
     def cancel_booking(self) -> None:
-        """
-        Cancels the booking by updating its status.
-        """
+        """Cancels the booking by updating its status."""
         self.__status = "Cancelled"
         print(f"Booking {self.__booking_id} cancelled.")
 
@@ -512,14 +701,6 @@ class Booking:
         new_price = self.__room.calculate_discounted_price(discount)
         print(f"Discount applied. New room price: {new_price}")
 
-    def generate_booking_summary(self) -> str:
-        """
-        Generates a summary of the booking details.
-
-        :return: A formatted booking summary.
-        """
-        return f"Booking {self.__booking_id}: Guest {self.__guest.get_account_details()['name']}, Room {self.__room.get_room_info()['room_number']}, Status: {self.__status}"
-
     def extend_booking(self, extra_days: int) -> None:
         """
         Extends the booking by a given number of days.
@@ -529,15 +710,6 @@ class Booking:
         new_checkout_day = int(self.__check_out_date.split('-')[2]) + extra_days
         self.__check_out_date = f"{self.__check_out_date[:8]}{new_checkout_day}"
         print(f"Booking {self.__booking_id} extended for {extra_days} extra days.")
-
-    def add_special_request(self, request: str) -> None:
-        """
-        Adds a special request for the booking.
-
-        :param request: The special request description.
-        """
-        self.__special_requests.append(request)
-        print(f"Special request added: {request}")
 
     def assign_room(self, room: "Room") -> None:
         """
@@ -558,10 +730,42 @@ class Booking:
         print(f"Guest details updated for Booking {self.__booking_id}")
 
     def notify_guest(self) -> None:
-        """
-        Sends a notification to the guest about their booking.
-        """
-        print(f"Notification sent to Guest {self.__guest.get_account_details()['name']} for Booking {self.__booking_id}")
+        """Sends a notification to the guest about their booking."""
+        print(f"Notification sent to Guest {self.__guest.get_name()} for Booking {self.__booking_id}")
+
+    def generate_booking_summary(self) -> str:
+        """Generates a summary of the booking details."""
+        return f"Booking {self.__booking_id}: Guest {self.__guest.get_name()}, Room {self.__room.get_room_number()}, Status: {self.__status}"
+
+    def __str__(self) -> str:
+        """Returns a string representation of the Booking object."""
+        return f"Booking ID: {self.__booking_id}, Guest: {self.__guest.get_name()}, Room: {self.__room.get_room_number()}, Status: {self.__status}"
+
+
+# Example Usage
+guest1 = Guest(301, "Alice Smith", "alice@email.com")
+room1 = Room(101, "Suite", ["Wi-Fi", "TV", "Mini-Bar"], 150.0)
+
+booking1 = Booking(1001, guest1, room1, "2025-07-01", "2025-07-05")
+
+# Testing Getter Methods
+print(booking1.get_booking_id())  # Output: 1001
+print(booking1.get_status())  # Output: Pending
+print(booking1.get_special_requests())  # Output: []
+
+# Testing Setter Methods
+booking1.set_status("Confirmed")
+booking1.add_special_request("Extra towels")
+
+# Confirm Booking
+booking1.confirm_booking()
+
+# Testing total cost calculation
+print(f"Total Cost: ${booking1.calculate_total_cost()}")  # Output: Total Cost: $600.0
+
+# Printing Updated Booking Info
+print(booking1)  # Output: Booking ID: 1001, Guest: Alice Smith, Room: 101, Status: Confirmed
+
 
 #Payment Class 
 class Payment:
@@ -570,10 +774,55 @@ class Payment:
     """
 
     def __init__(self, payment_id: int, booking: "Booking", amount: float, payment_method: str, status: str = "Pending"):
+        """
+        Initializes a Payment instance.
+
+        :param payment_id: Unique identifier for the payment.
+        :param booking: The Booking object associated with the payment.
+        :param amount: The amount to be paid.
+        :param payment_method: The method of payment (e.g., Credit Card, PayPal).
+        :param status: The payment status (e.g., Pending, Completed, Refunded).
+        """
         self.__payment_id = payment_id
         self.__booking = booking
         self.__amount = amount
         self.__payment_method = payment_method
+        self.__status = status
+
+    # Getter and Setter for payment_id
+    def get_payment_id(self) -> int:
+        """Returns the payment ID."""
+        return self.__payment_id
+
+    def set_payment_id(self, payment_id: int) -> None:
+        """Updates the payment ID."""
+        self.__payment_id = payment_id
+
+    # Getter and Setter for amount
+    def get_amount(self) -> float:
+        """Returns the payment amount."""
+        return self.__amount
+
+    def set_amount(self, amount: float) -> None:
+        """Updates the payment amount."""
+        self.__amount = amount
+
+    # Getter and Setter for payment_method
+    def get_payment_method(self) -> str:
+        """Returns the payment method."""
+        return self.__payment_method
+
+    def set_payment_method(self, payment_method: str) -> None:
+        """Updates the payment method."""
+        self.__payment_method = payment_method
+
+    # Getter and Setter for status
+    def get_payment_status(self) -> str:
+        """Returns the current payment status."""
+        return self.__status
+
+    def set_payment_status(self, status: str) -> None:
+        """Updates the payment status."""
         self.__status = status
 
     def process_payment(self) -> bool:
@@ -612,10 +861,6 @@ class Payment:
         """Validates payment details (amount must be positive and a payment method must be provided)."""
         return self.__amount > 0 and bool(self.__payment_method)
 
-    def get_payment_status(self) -> str:
-        """Returns the current payment status."""
-        return self.__status
-
     def send_payment_receipt(self) -> None:
         """Sends a payment receipt."""
         print(f"Receipt sent for Payment ID {self.__payment_id}")
@@ -637,6 +882,35 @@ class Payment:
     def verify_card_details(self, card_number: str) -> bool:
         """Verifies if a card number is valid (must be 16 digits and numeric)."""
         return len(card_number) == 16 and card_number.isdigit()
+
+    def __str__(self) -> str:
+        """Returns a string representation of the Payment object."""
+        return f"Payment ID: {self.__payment_id}, Amount: ${self.__amount}, Method: {self.__payment_method}, Status: {self.__status}"
+
+
+# Example Usage
+booking1 = Booking(1001, Guest(301, "Alice Smith", "alice@email.com"), Room(101, "Suite", ["Wi-Fi", "TV", "Mini-Bar"], 150.0), "2025-07-01", "2025-07-05")
+payment1 = Payment(5001, booking1, 600.0, "Credit Card")
+
+# Testing Getter Methods
+print(payment1.get_payment_id())  # Output: 5001
+print(payment1.get_amount())  # Output: 600.0
+print(payment1.get_payment_method())  # Output: Credit Card
+print(payment1.get_payment_status())  # Output: Pending
+
+# Testing Setter Methods
+payment1.set_amount(650.0)
+payment1.set_payment_status("Completed")
+
+# Processing Payment
+payment1.process_payment()
+
+# Applying VAT
+payment1.apply_vat(10)  # Adds 10% VAT
+
+# Printing Updated Payment Info
+print(payment1)  # Output: Payment ID: 5001, Amount: $715.0, Method: Credit Card, Status: Completed
+
     #Admin class 
 class Admin:
     """
@@ -655,90 +929,96 @@ class Admin:
         self.__username = username
         self.__password = password  # Consider using a hashing function for security.
 
+    # Getter and Setter for admin_id
+    def get_admin_id(self) -> int:
+        """Returns the admin ID."""
+        return self.__admin_id
+
+    def set_admin_id(self, admin_id: int) -> None:
+        """Updates the admin ID."""
+        self.__admin_id = admin_id
+
+    # Getter and Setter for username
+    def get_username(self) -> str:
+        """Returns the admin's username."""
+        return self.__username
+
+    def set_username(self, username: str) -> None:
+        """Updates the admin's username."""
+        self.__username = username
+
+    # Getter and Setter for password
+    def get_password(self) -> str:
+        """Returns the admin's password (not recommended for security reasons)."""
+        return self.__password
+
+    def set_password(self, password: str) -> None:
+        """Updates the admin's password (should be hashed for security)."""
+        self.__password = password
+
     def manage_rooms(self) -> None:
-        """
-        Manages hotel rooms, such as adding or removing rooms.
-        """
+        """Manages hotel rooms, such as adding or removing rooms."""
         print("Managing rooms...")
 
     def view_reports(self) -> str:
-        """
-        Retrieves and displays system reports.
-
-        :return: A string representing the system reports.
-        """
+        """Retrieves and displays system reports."""
         return "Displaying system reports..."
 
     def approve_service_requests(self, request_id: int) -> None:
-        """
-        Approves a service request based on its ID.
-
-        :param request_id: The ID of the service request to approve.
-        """
+        """Approves a service request based on its ID."""
         print(f"Service request {request_id} approved.")
 
     def assign_employees_to_requests(self) -> None:
-        """
-        Assigns employees to handle specific service requests.
-        """
+        """Assigns employees to handle specific service requests."""
         print("Assigning employees to service requests...")
 
     def monitor_system_activity(self) -> dict:
-        """
-        Monitors the system's current activity, including status and active users.
-
-        :return: A dictionary with system status and active user count.
-        """
+        """Monitors the system's current activity, including status and active users."""
         return {"status": "System running smoothly", "active_users": 120}
 
     def update_hotel_policies(self, policy: str) -> None:
-        """
-        Updates hotel policies.
-
-        :param policy: The new hotel policy to implement.
-        """
+        """Updates hotel policies."""
         print(f"Updated hotel policy: {policy}")
 
     def generate_financial_report(self) -> str:
-        """
-        Generates a financial report for the hotel.
-
-        :return: A string representing the financial report.
-        """
+        """Generates a financial report for the hotel."""
         return "Financial report generated."
 
     def block_guest(self, guest_id: int) -> None:
-        """
-        Blocks a guest from making further bookings.
-
-        :param guest_id: The ID of the guest to be blocked.
-        """
+        """Blocks a guest from making further bookings."""
         print(f"Guest {guest_id} has been blocked.")
 
     def change_room_prices(self, new_price: float, room_type: str) -> None:
-        """
-        Updates the price for a specific type of room.
-
-        :param new_price: The new price to be set.
-        :param room_type: The type of room (e.g., single, double, suite).
-        """
+        """Updates the price for a specific type of room."""
         print(f"Updated price of {room_type} rooms to {new_price}.")
 
     def add_new_employee(self, employee: "Employee") -> None:
-        """
-        Adds a new employee to the system.
-
-        :param employee: The Employee object to be added.
-        """
-        print(f"New employee {employee} added to the system.")
+        """Adds a new employee to the system."""
+        print(f"New employee {employee.get_name()} added to the system.")
 
     def remove_employee(self, employee_id: int) -> None:
-        """
-        Removes an employee from the system.
-
-        :param employee_id: The ID of the employee to be removed.
-        """
+        """Removes an employee from the system."""
         print(f"Employee with ID {employee_id} has been removed.")
+
+    def __str__(self) -> str:
+        """Returns a string representation of the Admin object."""
+        return f"Admin(ID: {self.__admin_id}, Username: {self.__username})"
+
+
+# Example Usage
+admin1 = Admin(1, "admin123", "securepass")
+
+# Testing Getter Methods
+print(admin1.get_admin_id())  # Output: 1
+print(admin1.get_username())  # Output: admin123
+
+# Testing Setter Methods
+admin1.set_username("superadmin")
+admin1.set_password("newsecurepass")
+
+# Printing Updated Admin Info
+print(admin1)  # Output: Admin(ID: 1, Username: superadmin)
+
 
 #Feedback Class
 class Feedback:
@@ -749,11 +1029,46 @@ class Feedback:
     all_feedbacks = []  # Stores all feedback instances for filtering and analysis
 
     def __init__(self, feedback_id: int, guest: "Guest", rating: int, comments: str):
+        """
+        Initializes a Feedback instance.
+
+        :param feedback_id: Unique identifier for the feedback.
+        :param guest: The Guest object associated with the feedback.
+        :param rating: The rating given by the guest (1-5).
+        :param comments: The comments provided by the guest.
+        """
         self.__feedback_id = feedback_id
         self.__guest = guest
         self.__rating = rating
         self.__comments = comments
         Feedback.all_feedbacks.append(self)  # Store feedback globally
+
+    # Getter and Setter for feedback_id
+    def get_feedback_id(self) -> int:
+        """Returns the feedback ID."""
+        return self.__feedback_id
+
+    def set_feedback_id(self, feedback_id: int) -> None:
+        """Updates the feedback ID."""
+        self.__feedback_id = feedback_id
+
+    # Getter and Setter for rating
+    def get_rating(self) -> int:
+        """Returns the feedback rating."""
+        return self.__rating
+
+    def set_rating(self, rating: int) -> None:
+        """Updates the feedback rating."""
+        self.__rating = rating
+
+    # Getter and Setter for comments
+    def get_comments(self) -> str:
+        """Returns the feedback comments."""
+        return self.__comments
+
+    def set_comments(self, comments: str) -> None:
+        """Updates the feedback comments."""
+        self.__comments = comments
 
     def submit_feedback(self, rating: int, comments: str) -> None:
         """Updates feedback rating and comments."""
@@ -792,7 +1107,7 @@ class Feedback:
     @staticmethod
     def get_guest_feedback(guest_id: int) -> list:
         """Retrieves all feedback entries for a specific guest ID."""
-        return [f for f in Feedback.all_feedbacks if f.__guest.get_id() == guest_id]
+        return [f for f in Feedback.all_feedbacks if f.__guest.get_guest_id() == guest_id]
 
     def reply_to_feedback(self, admin: "Admin", response: str) -> None:
         """Allows an admin to reply to feedback."""
@@ -806,3 +1121,26 @@ class Feedback:
             "Average Rating": Feedback.get_average_rating(),
         }
 
+    def __str__(self) -> str:
+        """Returns a string representation of the Feedback object."""
+        return f"Feedback(ID: {self.__feedback_id}, Guest: {self.__guest.get_name()}, Rating: {self.__rating}, Comments: {self.__comments})"
+
+
+# Example Usage
+guest1 = Guest(301, "Alice Smith", "alice@email.com")
+feedback1 = Feedback(101, guest1, 5, "Great service!")
+
+# Testing Getter Methods
+print(feedback1.get_feedback_id())  # Output: 101
+print(feedback1.get_rating())  # Output: 5
+print(feedback1.get_comments())  # Output: Great service!
+
+# Testing Setter Methods
+feedback1.set_rating(4)
+feedback1.set_comments("Good service, but can improve.")
+
+# Viewing Feedback
+print(feedback1.view_feedback())  # Output: Feedback ID: 101, Rating: 4, Comments: Good service, but can improve.
+
+# Printing Feedback Object
+print(feedback1)  # Output: Feedback(ID: 101, Guest: Alice Smith, Rating: 4, Comments: Good service, but can improve.)
